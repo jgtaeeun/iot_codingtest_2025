@@ -132,7 +132,121 @@ def solution(arr):
     - 하나라도 실패하면 통과 못함. 전부 통과
 4. 다른 사람의 풀이 보기 가능(점수 차감X)
 
+### 스택
+- LIFO: 맨 나중에 추가한 데이터가 가장 먼저 출력되는 구조
+- push() : 데이터 삽입. 쌓여있는 데이터 마지막에 추가
+- pop() : 데이터 추출. 쌓영있는 데이터 마지막에서 추출
 
 ## 120일차(7/28)
-- 코딩테스트 대체 과제 - 프로그래머스에서 위의 코테 과정 진행 후 코드 제출 
-    - 문제04 모의고사 
+
+
+### 깃헙 팁
+- https://github.com/jgtaeeun  주소에 com -> dev
+    - 브라우저 상에서 온라인 VS Code가 실행
+    - 로컬 VS Code와 동일하게 사용가능
+    - 처음 Ctrl + F5로 실행, CodeSpace 설정, CPU 2Core, 8Gb... 등 선택하고 코드스페이스 생성
+    - <img src="./githubvscode.png" width=500>
+
+### 스택
+- 몸풀기 문제, 모의 테스트
+- 제출 후 체점하기에서 print()문 제거 또는 주석처리할 것(효율성 테스트)
+- [링크](./DAY120/01_스택.ipynb)
+
+### 큐
+- FIFO : 맨 먼저 삽입한 데이터가 가장 먼저 출력되는 구조
+- enQueue() : 데이터 삽입
+- deQueue() : 데이터 추출
+- [링크](./DAY120/02_큐.ipynb)
+
+
+## 121일차(7/29)
+- 스택- 표편집
+## 122일차(7/30)
+
+## 123일차(7/31)
+
+## 124일차(8/1)
+### 코딩테스트 대체 과제(문제04 모의고사) - 프로그래머스에서 위의 코테 과정 진행 후 코드 제출 
+
+|문제|
+|:--:|
+|<img src='./코딩테스트-벡터/모의고사 문제.png' width=500>|
+
+|이전코드 문제점|
+|:--:|
+|사용자가 작성한 코드에서는 모의고사 문제의 정답 배열(answers)에 대해 각 수포자들의 답안을 40문제까지만 복사하여 비교하고 있습니다. <br>이 접근 방식에는 두 가지 주요한 문제가 있습니다. <br>첫째, 문제의 제한 조건에 따르면 시험은 최대 10,000 문제로 구성될 수 있습니다. 따라서, 실제 문제의 길이가 40문제를 초과할 경우 코드가 잘못된 결과를 반환할 수 있습니다. <br> 둘째, temp 벡터에 각 수포자의 정답 번호를 저장하는 대신에, 각 수포자가 맞춘 정답의 수를 직접 계산해야 합니다.현재 코드는 맞춘 정답의 번호를 temp에 추가하고 있으나, 이는 문제를 해결하는 올바른 방법이 아닙니다. <br> 올바르게 접근하려면 각 수포자가 찍은 답안이 실제 정답과 일치하는지를 검사하고, 각 수포자의 맞춘 문제수를 직접 카운트하는 방식으로 접근하여 그 결과를 바탕으로 최고 점수를 받은 사람을 찾아야 합니다.|
+
+
+- 수정한 코드
+```c
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>  
+using namespace std;
+
+vector<int> solution(vector<int> answers) {
+    vector<int> answer;
+    vector<int> temp;
+
+    vector <int> person1 = { 1,2,3,4,5 };
+    vector <int> person2 = { 2,1,2,3,2,4,2,5 };
+    vector <int > person3 = { 3,3,1,1,2,2,4,4,5,5 };
+
+    int cnt1 = 0;
+    int cnt2 = 0;
+    int cnt3 = 0;
+
+    // 맞춘 문제 개수 저장
+    for (int i = 0; i < answers.size(); i++)
+    {
+        if (answers[i] == person1[i % 5]) cnt1 +=1 ;
+        if (answers[i] == person2[i % 8]) cnt2 += 1;
+        if (answers[i] == person3[i % 10])  cnt3 += 1;
+    }
+
+    temp.push_back(cnt1);
+    temp.push_back(cnt2);
+    temp.push_back(cnt3);
+
+    int max_val = *std::max_element(temp.begin(), temp.end());
+
+    // 가장 많이 맞춘 사람 저장
+    for (int i = 0; i < temp.size(); ++i) {
+        if (temp[i] == max_val) {
+            answer.push_back(i+1);
+        }
+    }
+    std::sort(answer.begin(), answer.end());
+
+    return answer;
+}
+
+
+int main()
+{
+	vector<int> answer;
+	int count;
+	cout << "문제개수: ";
+	cin >> count;
+
+    //답안지 생성
+	vector<int> answers(count);
+	for (int i = 0; i < count; ++i) {
+		cin >> answers[i];
+	}
+
+	answer= solution(answers);
+	for (int i = 0; i < answer.size(); ++i) {
+		cout<< answer[i]<< " ";
+	}
+	cout << endl;
+	return 0;
+}
+```
+
+|실행결과|
+|:--:|
+|<img src='./코딩테스트-벡터/모의고사 테스트케이스.png' width=500>|
+|<img src='./코딩테스트-벡터/모의고사 실행결과.png' width=500>|
+|<img src='./코딩테스트-벡터/모의고사 채점결과.png' width=500>|
