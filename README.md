@@ -262,6 +262,10 @@ def solution(arr):
 - 음의 순환 주의할 것!!
 - 
 
+https://github.com/user-attachments/assets/b0e84842-4137-43be-8ff5-042977bd0c1b
+
+
+
 ## 124일차(8/1)
 ### 코딩테스트 대체 과제- 프로그래머스에서 위의 코테 과정 진행 후 코드 제출 
 
